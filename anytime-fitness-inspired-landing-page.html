@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anytime Fitness Inspired Landing Page</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --line: #e8e8e8;
+      --black: #0a0a0a;
+      --purple: #7b2cff;
+      --purple-soft: #f4eeff;
+      --panel: rgba(255,255,255,0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1200px, calc(100% - 40px)); margin: 0 auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+    }
+
+    .logo {
+      display: inline-block;
+      background: #000;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #444;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--purple); color: #fff; }
+    .btn-dark { background: #000; color: #fff; }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.18); color: #fff; background: transparent; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at top right, rgba(123,44,255,0.35), transparent 28%),
+                  radial-gradient(circle at bottom left, rgba(255,255,255,0.08), transparent 30%),
+                  #0b0b0e;
+      color: #fff;
+      border-bottom: 1px solid #1f1f24;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      padding: 90px 0;
+      align-items: start;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: #caaeff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .hero p.lead {
+      max-width: 720px;
+      margin: 24px 0 0;
+      font-size: 20px;
+      line-height: 1.8;
+      color: #d0d0d7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .finder-card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+      backdrop-filter: blur(16px);
+    }
+
+    .finder-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .finder-head h2, .section-title {
+      margin: 0;
+      font-size: clamp(30px, 3vw, 44px);
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(123,44,255,0.2);
+      color: #eadcff;
+      white-space: nowrap;
+    }
+
+    .finder-card .small {
+      color: #cfcfd4;
+      font-size: 14px;
+      margin: 14px 0 12px;
+    }
+
+    .search-wrap {
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 12px;
+    }
+
+    .search-wrap input, .form-grid input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .quick-tags {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .quick-tags div {
+      text-align: center;
+      padding: 14px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0f0f3;
+    }
+
+    .network-box {
+      margin-top: 22px;
+      background: #fff;
+      color: #111;
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .network-box .label {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #777;
+    }
+
+    .network-box .stat {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .network-box .stat strong {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .section-sub {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+
+    .pricing-grid, .benefit-grid, .footer-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    .benefit-grid { grid-template-columns: repeat(4, 1fr); }
+    .footer-grid { grid-template-columns: repeat(4, 1fr); }
+
+    .card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 32px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    }
+
+    .card.featured {
+      background: var(--purple-soft);
+      border-color: #c9a7ff;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .price strong {
+      font-size: 54px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .muted { color: var(--muted); }
+
+    .features {
+      margin: 22px 0 0;
+      padding-left: 18px;
+      color: #444;
+    }
+
+    .features li { margin: 10px 0; }
+
+    .benefit-wrap {
+      background: #fafafa;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .benefit-card h3 {
+      font-size: 24px;
+    }
+
+    .benefit-card p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .cta-box {
+      background: #080808;
+      color: #fff;
+      border-radius: 34px;
+      padding: 48px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .cta-box p {
+      color: #d0d0d7;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .form-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 16px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .form-grid .full { grid-column: 1 / -1; }
+
+    footer {
+      background: #0a0a0a;
+      color: #fff;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 34px;
+    }
+
+    .footer-title {
+      margin: 0 0 16px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #9b9b9b;
+    }
+
+    .footer-links a {
+      display: block;
+      margin: 10px 0;
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+    }
+
+    .copyright {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #8a8a8a;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .pricing-grid,
+      .benefit-grid,
+      .cta-grid,
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-grid { grid-template-columns: 1fr; }
+      .cta-grid { grid-template-columns: 1fr; }
+      .nav { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(100% - 28px, 1200px); }
+      .section, .hero-grid { padding-top: 64px; padding-bottom: 64px; }
+      .pricing-grid, .benefit-grid, .footer-grid, .quick-tags, .form-grid { grid-template-columns: 1fr; }
+      .section-head, .footer-top, .header-inner { flex-direction: column; align-items: flex-start; }
+      .cta-box { padding: 28px; }
+      .finder-card { padding: 22px; }
+      .btn { width: 100%; }
+      .hero-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">ANYTIME FITNESS</a>
+      <nav class="nav">
+        <a href="#find-gym">Find A Gym</a>
+        <a href="#why-join">Why Join</a>
+        <a href="#employee-wellness">Employee Wellness</a>
+        <a href="#own-a-gym">Own A Gym</a>
+      </nav>
+      <a href="#trial" class="btn btn-primary">Try Us For Free</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="find-gym">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Singapore's Largest Gym Franchise</p>
+          <h1>Find Your Gym</h1>
+          <p class="lead">Train on your schedule with 24/7 access. Search one of our 153 gyms in Singapore or one of our 5,821 gyms worldwide.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#locations">Find A Gym Near You Now</a>
+            <a class="btn btn-outline" href="#pricing">View Membership Pricing</a>
+          </div>
+        </div>
+
+        <div class="finder-card">
+          <div class="finder-head">
+            <h2>Find Your Gym</h2>
+            <span class="pill">24/7 Access</span>
+          </div>
+          <p class="small">Search by City &amp; State or Zip Code</p>
+          <div class="search-wrap">
+            <input type="text" placeholder="Begin typing to search..." />
+          </div>
+          <div class="quick-tags">
+            <div>Tanjong Pagar</div>
+            <div>Orchard</div>
+            <div>Jurong</div>
+            <div>Tampines</div>
+          </div>
+          <div class="network-box">
+            <p class="label">Worldwide Network</p>
+            <div class="stat">
+              <strong>5,821</strong>
+              <span class="muted">gyms worldwide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub">Membership</p>
+            <h2 class="section-title">Anytime Fitness Membership Pricing</h2>
+          </div>
+          <a href="#trial" class="btn btn-dark">Get Started</a>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="card">
+            <div class="card-top">
+              <h3>Starter</h3>
+            </div>
+            <div class="price"><strong>$95</strong><span class="muted">/ month</span></div>
+            <p class="muted">Perfect for building consistency with full club access.</p>
+            <ul class="features">
+              <li>24/7 gym access</li>
+              <li>Worldwide club access</li>
+              <li>Strength &amp; cardio zones</li>
+              <li>Supportive member community</li>
+            </ul>
+            <a href="#trial" class="btn btn-dark" style="width:100%; margin-top:24px;">Choose Starter</a>
+          </article>
+
+          <article class="card featured">
+            <div class="card-top">
+              <h3>Popular</h3>
+              <span class="pill" style="background:#7b2cff; color:#fff;">Most Popular</span>
+            </div>
+            <div class="price"><strong>$110</strong><span class="muted">/ month</span></div>
+            <p class="muted">Best for members who want coaching support and flexibility.</p>
+            <ul class="features">
+              <li>24/7 gym access</li>
+              <li>Worldwide club access</li>
+              <li>Strength &amp; cardio zones</li>
+              <li>Supportive member community</li>
+            </ul>
+            <a href="#trial" class="btn btn-dark" style="width:100%; margin-top:24px;">Choose Popular</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>Premium</h3>
+            </div>
+            <div class="price"><strong>$135</strong><span class="muted">/ month</span></div>
+            <p class="muted">Includes added perks for frequent training and recovery.</p>
+            <ul class="features">
+              <li>24/7 gym access</li>
+              <li>Worldwide club access</li>
+              <li>Strength &amp; cardio zones</li>
+              <li>Supportive member community</li>
+            </ul>
+            <a href="#trial" class="btn btn-dark" style="width:100%; margin-top:24px;">Choose Premium</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section benefit-wrap" id="why-join">
+      <div class="container">
+        <p class="section-sub">Why Join</p>
+        <h2 class="section-title">Fitness that works around your life</h2>
+        <div class="benefit-grid" style="margin-top:32px;">
+          <article class="card benefit-card">
+            <h3>24/7 Convenience</h3>
+            <p>Work out on your schedule, whenever it suits you.</p>
+          </article>
+          <article class="card benefit-card">
+            <h3>Islandwide Access</h3>
+            <p>Train close to home, work, or anywhere in between.</p>
+          </article>
+          <article class="card benefit-card">
+            <h3>Global Network</h3>
+            <p>Your membership travels with you around the world.</p>
+          </article>
+          <article class="card benefit-card">
+            <h3>Support &amp; Coaching</h3>
+            <p>Build momentum with guidance and accountability.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="trial">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-grid">
+            <div>
+              <p class="eyebrow">Start Today</p>
+              <h2 class="section-title" style="color:#fff;">Ready to unlock your full potential?</h2>
+              <p>Join a community built around convenience, support, and consistency.</p>
+            </div>
+            <div class="form-card">
+              <div class="form-grid">
+                <input type="text" placeholder="First name" />
+                <input type="text" placeholder="Last name" />
+                <input class="full" type="email" placeholder="Email address" />
+                <a href="#" class="btn btn-primary full">Try Us For Free</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container section" style="padding-top:56px; padding-bottom:56px;">
+      <div class="footer-top">
+        <a href="#" class="logo" style="background:#fff; color:#000;">ANYTIME FITNESS</a>
+        <p class="muted" style="max-width:600px; color:#b0b0b0; margin:0;">Richmond Commercial Building, 109 Argyle Street, Mong Kok, KLN, Hong Kong</p>
+      </div>
+
+      <div class="footer-grid">
+        <div>
+          <p class="footer-title">Company</p>
+          <div class="footer-links">
+            <a href="#">INSPIRE TO GROW WITH US</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">DMCA Policy</a>
+            <a href="#">Terms &amp; Conditions</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-title">Gyms</p>
+          <div class="footer-links">
+            <a href="#">Find a Gym</a>
+            <a href="#">View All Gyms</a>
+            <a href="#">Own A Gym</a>
+            <a href="#">Franchise Login</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-title">Members</p>
+          <div class="footer-links">
+            <a href="#">FAQs</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-title">Social Media</p>
+          <div class="footer-links">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">YouTube</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">© 2026 Asia Fitness Limited</div>
+    </div>
+  </footer>
+</body>
+</html>
